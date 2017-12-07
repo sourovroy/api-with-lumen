@@ -25,7 +25,7 @@ $router->delete('/users/{user_id}', 'UserController@destroy');
 
 // Posts
 $router->get('/posts','PostController@index');
-$router->post('/posts','PostController@store');
+
 $router->get('/posts/{post_id}','PostController@show');
 $router->put('/posts/{post_id}', 'PostController@update');
 $router->delete('/posts/{post_id}', 'PostController@destroy');
@@ -39,3 +39,13 @@ $router->get('/posts/{post_id}/comments', 'PostCommentController@index');
 $router->post('/posts/{post_id}/comments', 'PostCommentController@store');
 $router->put('/posts/{post_id}/comments/{comment_id}', 'PostCommentController@update');
 $router->delete('/posts/{post_id}/comments/{comment_id}', 'PostCommentController@destroy');
+
+/**
+ * Auth middleware routes
+ */
+$router->group(['middleware' => 'auth'], function() use($router){
+
+	// Posts
+	$router->post('/posts','PostController@store');
+
+});

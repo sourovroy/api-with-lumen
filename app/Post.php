@@ -8,11 +8,11 @@ class Post extends Model
 {
 
     protected $fillable = [
-    	'id', 'user_id', 'title', 'content'
+    	'id', 'title', 'content', 'image_url'
     ];
 
     protected $hidden = [
-    	'created_at', 'updated_at'
+    	'updated_at'
     ];
 
     /**

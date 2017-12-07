@@ -23,17 +23,18 @@ $factory->define(App\Comment::class, function (Faker\Generator $faker) {
     return [
         'content' => $faker->paragraph(1),
         'post_id' => mt_rand(1, 50),
-        'user_id' => mt_rand(1, 10)
+        'user_id' => mt_rand(1, 10),
+        'image_url' => $faker->imageUrl(640, 480),
     ];
 });
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
-
     $hasher = app()->make('hash');
-
+    $email = $faker->email;
     return [
         'name' => $faker->name,
-        'email' => $faker->email,
-        'password' => $hasher->make("secret")
+        'email' => $email,
+        'password' => $hasher->make("secret"),
+        'api_token' => md5($email)
     ];
 });
