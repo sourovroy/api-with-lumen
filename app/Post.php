@@ -29,5 +29,14 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Search query
+     */
+    public function scopeSearch($query, $text)
+    {
+        return $query->where('title', 'LIKE', "%{$text}%");
+    }
+
+
     
 }
