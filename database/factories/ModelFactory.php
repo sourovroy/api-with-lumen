@@ -12,11 +12,16 @@
 */
 
 $factory->define(App\Post::class, function (Faker\Generator $faker) {
+    $image = file_get_contents($faker->imageUrl(640, 480));
+    $filename = uniqid().'.jpeg';
+    $path = base_path('public/images/'.$filename);
+    file_put_contents($path, $image);
+
     return [
         'title' => $faker->sentence(4),
         'content' => $faker->paragraph(4),
         'user_id' => mt_rand(1, 2),
-        'image_url' => $faker->imageUrl(640, 480),
+        'image_url' => 'http://api.sourov.im/images/'.$filename,
     ];
 });
 

@@ -27,7 +27,7 @@ class Controller extends BaseController
     /**
      * Send error message
      */
-    public function error($message, $code){
+    public function error($message, $code = 422){
         return response()->json([
             'success' => false,
             'status' => $code,

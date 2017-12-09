@@ -21,6 +21,11 @@ class PostController extends Controller
             return $this->error($validator->errors()->first(), 422);
         }
 
+        if($request->has('user_id')){
+            $userId = (int) $request->input('user_id');
+            $postsModel = $postsModel->where('user_id', '=', $userId);
+        }
+
         if($request->has('search')){
             $postsModel = $postsModel->search($request->input('search'));
         }
@@ -70,17 +75,25 @@ class PostController extends Controller
      */
     public function postTransform($post)
     {
-        if(is_object($post) && is_a($post, 'App\Post')){
-            return [
-                'item' => [
-                    'id' => $post->id,
-                    'title' => $post->title,
-                    'content' => $post->content,
-                    'image_url' => $post->image_url,
-                    'user_id' => (int) $post->user_id,
-                    'created_at' => (string) $post->created_at,
-                ]
+        if(is_object($post) && is_a($post, 'App\Post')){            
+            $item = [
+                'id' => $post->id,
+                'title' => $post->title,
+                'content' => $post->content,
+                'image_url' => $post->image_url,
+                'user_id' => (int) $post->user_id,
+                'created_at' => (string) $post->created_at,
             ];
+
+            if($post->relationLoaded('user')){
+                $item['user'] = $post->user;
+            }
+
+            if($post->relationLoaded('comments')){
+                $item['comments'] = $post->comments;
+            }
+            
+            return ['item' => $item];
         }
 
         return $post;
@@ -105,8 +118,8 @@ class PostController extends Controller
             $postModel = $postModel->with($withs);
         }
 
-    	// $post = $this->postTransform($post);
-        return $this->success(['item' => $postModel->first()]);
+    	$post = $this->postTransform($postModel->first());
+        return $this->success($post);
     }
 
     /**
@@ -146,7 +159,7 @@ class PostController extends Controller
     /**
      * Show all validate
      */
-    public function listValidate($request)
+    private function listValidate($request)
     {
     	$validator = Validator::make($request->all(), [
             'order_by' => 'nullable|in:id,title,created_at',
@@ -166,7 +179,7 @@ class PostController extends Controller
     	if(is_array($with)){
     		$with = array_keys($with);
     		foreach($with as $value){
-    			if(!in_array($value, $postWiths)){
+    			if(empty($value) || !in_array($value, $postWiths)){
         			return false;
         		}
     		}

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Validator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -11,10 +13,18 @@ class UserController extends Controller
     /**
      * Show list of user
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        return $this->success($users, 200);
+        $userModel = User::make();
+        
+        if($request->has('per_page')){
+            $perPage = (int) $request->input('per_page');
+            $users = $userModel->paginate($perPage);
+        }else{
+            $users = $userModel->paginate(20);
+        }
+
+        return $this->success($users);
     }
 
     /**
@@ -22,28 +32,41 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateRequest($request);
+        $validator = $this->saveRequest($request);
+
+        if($validator->fails()){
+            return $this->error($validator->errors()->first(), 422);
+        }
 
         $user = User::create([
+            'name' => $request->get('name'),
             'email' => $request->get('email'),
-            'password'=> Hash::make($request->get('password'))
+            'password'=> Hash::make($request->get('password')),
+            'api_token'=> md5($request->get('email'))
         ]);
 
-        return $this->success("The user with with id {$user->id} has been created", 201);
+        return $this->success(['item' => $user], 201);
     }
 
     /**
      * Show a specific user
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $user = User::find($id);
 
-        if(!$user){
+        if(empty($user)){
             return $this->error("The user with id {$id} doesn't exist", 404);
         }
 
-        return $this->success($user, 200);
+        $password = $request->header('Api-Password');
+        if($password){
+            if(Hash::check($password, $user->password)){
+                $user->token = $user->api_token;
+            }
+        }
+
+        return $this->success(['item' => $user]);
     }
 
     /**
@@ -57,43 +80,52 @@ class UserController extends Controller
             return $this->error("The user with id {$id} doesn't exist", 404);
         }
 
-        $this->validateRequest($request);
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:users,email,'.$user->id, 
+            'password' => 'required|min:6'
+        ]);
+
+        if($validator->fails()){
+            return $this->error($validator->errors()->first(), 422);
+        }
 
         $user->email = $request->get('email');
         $user->password = Hash::make($request->get('password'));
 
         $user->save();
 
-        return $this->success("The user with with id {$user->id} has been updated", 200);
+        return $this->success(['item' => $user]);
     }
 
     /**
      * Delete a user
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $user = User::find($id);
 
         if(!$user){
             return $this->error("The user with id {$id} doesn't exist", 404);
+        }elseif($user->id != $request->user()->id){
+            return $this->error('You don\'t have access to delete this user.', 401);
         }
 
         $user->delete();
 
-        return $this->success("The user with with id {$id} has been deleted", 200);
+        return $this->success("The user with with id {$id} has been deleted.");
     }
 
     /**
      * Validation roles for user
      */
-    public function validateRequest(Request $request)
+    private function saveRequest(Request $request)
     {
         $rules = [
             'email' => 'required|email|unique:users', 
             'password' => 'required|min:6'
         ];
 
-        $this->validate($request, $rules);
+        return Validator::make($request->all(), $rules);
     }
 
 }
