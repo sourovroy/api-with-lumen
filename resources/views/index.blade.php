@@ -58,6 +58,8 @@
 		    </p>
 
 		    <p>To CRUD your own posts and comments you need to create a user then add, update or delete by using this account.</p>
+
+		    <p>If you find anything wrong in this documentation or anything need to improve please send me an email sourovfci@gmail.com</p>
 		    <!-- END_INFO -->
 
 		    <!-- START_HTTP_VARBS -->
@@ -72,6 +74,10 @@
 		        @include('users')
 		    <!-- END_USER -->
 
+			<pre>
+				&nbsp;
+				&nbsp;
+			</pre>
 
 	    </div> <!-- /.content -->
 
