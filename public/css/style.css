@@ -4,7 +4,10 @@
 .content dd, .content dt, .content li, .content p {
     font-size: 15px;
 }
-
 .content table tr:first-child {
     border-top: 1px solid #ccc;
+}
+.content pre{
+    padding-top:0;
+    padding-bottom:0;
 }

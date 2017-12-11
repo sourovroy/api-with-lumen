@@ -39,9 +39,6 @@
         <ul class="search-results"></ul>
         <div id="toc"></div>
 
-        <ul class="toc-footer">
-            <li><a href='http://github.com/mpociot/documentarian'>Documentation Powered by Documentarian</a></li>
-        </ul>
     </div>
 
     <div class="page-wrapper">
@@ -57,7 +54,7 @@
 			    but here you can CRUD your own data.
 		    </p>
 
-		    <p>To CRUD your own posts and comments you need to create a user then add, update or delete by using this account.</p>
+		    <p>To CRUD your own posts and comments you need to create a user then send HTTP request with Api-Token this user.</p>
 
 		    <p>If you find anything wrong in this documentation or anything need to improve please send me an email sourovfci@gmail.com</p>
 		    <!-- END_INFO -->
