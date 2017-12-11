@@ -5,20 +5,17 @@
 	<p>Example request:</p>
 </blockquote>
 
-<pre><code class="language-bash">curl -X GET "http://api.sourov.im/users"</code></pre>
+<pre><code class="language-bash">curl -X GET "https://api.sourov.im/users"</code></pre>
 
-<pre><code class="language-javascript">var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": "http://localhost/api/test",
-    "method": "GET",
-    "headers": {
-        "accept": "application/json"
-    }
-}
-
-$.ajax(settings).done(function(response){
+<pre><code class="language-javascript">jQuery.ajax({
+  url: "https://api.sourov.im/users",
+  method: "GET",
+  success: function(response){
     console.log(response);
+  },
+  error: function(xhr, status, errors){
+    console.log(errors);
+  }
 });</code></pre>
 
 <blockquote>
@@ -64,7 +61,7 @@ $.ajax(settings).done(function(response){
 
 <p>Get a list of all users with pagination.</p>
 <h3>HTTP Request</h3>
-<p><code>GET http://api.sourov.im/users</code></p>
+<p><code>GET https://api.sourov.im/users</code></p>
 
 <h3>HTTP Request</h3>
 <p><code>GET api/test</code></p>
