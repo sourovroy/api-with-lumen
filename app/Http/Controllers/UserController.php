@@ -78,6 +78,8 @@ class UserController extends Controller
 
         if(!$user){
             return $this->error("The user with id {$id} doesn't exist", 404);
+        }elseif($user->id != $request->user()->id){
+            return $this->error('You don\'t have access to edit this user.', 401);
         }
 
         $validator = Validator::make($request->all(), [

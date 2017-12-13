@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class PostCommentController extends Controller
 {
     /**
+     * Get all comments of a post
      * Show comments
      */
     public function index($post_id)

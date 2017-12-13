@@ -207,7 +207,7 @@ class PostController extends Controller
 
         $post->delete();
 
-        return $this->success("The post with with id {$id} has been deleted.");
+        return $this->success("The post with id {$id} has been deleted.");
     }
 
 }

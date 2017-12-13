@@ -54,7 +54,7 @@
 			    but here you can CRUD your own data.
 		    </p>
 
-		    <p>To CRUD your own posts and comments you need to create a user then send HTTP request with Api-Token this user.</p>
+		    <p>To CRUD your own posts and comments you need to create a user then send HTTP request with Api-Token of this user.</p>
 
 		    <p>If you find anything wrong in this documentation or anything need to improve please send me an email sourovfci@gmail.com</p>
 		    <!-- END_INFO -->
@@ -70,6 +70,14 @@
 		    <!-- START_USER -->
 		        @include('users')
 		    <!-- END_USER -->
+
+		    <!-- START_POSTS -->
+		        @include('posts')
+		    <!-- END_POSTS -->
+
+		    <!-- START_COMMENTS -->
+		        @include('comments')
+		    <!-- END_COMMENTS -->
 
 			<br><p style="height:200px;">&nbsp;</p><br>
 

@@ -371,6 +371,9 @@
   </tbody>
 </table>
 
+<aside class="notice">
+You can update only your own user, You are unable to edit other users with your Api-Token.
+</aside>
 
 <h2>Delete user</h2>
 
