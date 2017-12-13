@@ -20,12 +20,12 @@
     <a href="#" id="nav-button">
         <span>
             NAV
-            <img src="img/navbar.png"/>
+            <img src="img/navbar.png" alt="Nav" />
         </span>
     </a>
 
     <div class="tocify-wrapper">
-	    <a href="/"><img src="img/logo-2.png"/></a>
+	    <a href="/"><img src="img/logo-2.png" alt="Logo" /></a>
 
         <div class="lang-selector">
             <a href="#" data-language-name="bash">bash</a>
@@ -71,10 +71,7 @@
 		        @include('users')
 		    <!-- END_USER -->
 
-			<pre>
-				&nbsp;
-				&nbsp;
-			</pre>
+			<br><p style="height:200px;">&nbsp;</p><br>
 
 	    </div> <!-- /.content -->
 

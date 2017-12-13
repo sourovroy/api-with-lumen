@@ -89,9 +89,18 @@ class UserController extends Controller
             return $this->error($validator->errors()->first(), 422);
         }
 
-        $user->email = $request->get('email');
-        $user->password = Hash::make($request->get('password'));
+        if($request->has('name')){
+            $user->name = $request->get('name');
+        }
 
+        if($request->has('email')){
+            $user->email = $request->get('email');
+        }
+
+        if($request->has('password')){
+            $user->password = Hash::make($request->get('password'));
+        }
+        
         $user->save();
 
         return $this->success(['item' => $user]);
@@ -112,7 +121,7 @@ class UserController extends Controller
 
         $user->delete();
 
-        return $this->success("The user with with id {$id} has been deleted.");
+        return $this->success("The user with id {$id} has been deleted.");
     }
 
     /**
