@@ -79,7 +79,7 @@
 		        @include('comments')
 		    <!-- END_COMMENTS -->
 
-			<br><p style="height:200px;">&nbsp;</p><br>
+			<br><p style="height:250px;">&nbsp;</p><br>
 
 	    </div> <!-- /.content -->
 

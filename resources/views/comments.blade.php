@@ -210,7 +210,6 @@
 <p>Access the <code>items</code> property to get all comments, if no comments found it will return an empty array.</p>
 
 <h2>Create comment</h2>
-
 <blockquote>
   <p>Example request:</p>
 </blockquote>
@@ -238,9 +237,162 @@
 <blockquote>
   <p>Example response:</p>
 </blockquote>
-<pre><code class="language-json"></code>
+<pre><code class="language-json">{
+  "item": {
+    "id": 101,
+    "user_id": 4,
+    "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit Nobis placeat consectetur adipisicing elit Nobis placeat.",
+    "post_id": 85
+  },
+  "status": 201,
+  "success": true
+}</code>
 </pre>
 
 <p>Add comment to a post, you must set <code>Api-Token</code> header to create comment.</p>
 <h3>HTTP Request</h3>
 <p><code>POST https://api.sourov.im/posts/:post_id/comments</code></p>
+<h3>Required properties</h3>
+<p>content</p>
+<h3>Data Parameters</h3>
+<table>
+  <thead>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>content</td>
+    <td>string</td>
+    <td>Content of the comment.</td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>Update comment</h2>
+<blockquote>
+  <p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -H "Content-Type: application/json" \
+-H "Api-Token: 94f73a7957ff4ac0214ce40d26f6ef6e" -X PUT -d \
+'{"content":"Nobis placeat dolor sit amet consectetur adipisicing."}' \
+"https://api.sourov.im/posts/85/comments/101"</code></pre>
+<pre><code class="language-javascript">jQuery.ajax({
+  url: "https://api.sourov.im/posts/85/comments/101",
+  method: "PUT",
+  headers: {
+    "Api-Token": "94f73a7957ff4ac0214ce40d26f6ef6e"
+  },
+  data: {
+    content: "Lorem ipsum dolor sit amet consectetur adipisicing elit Nobis placeat consectetur adipisicing elit Nobis placeat."
+  },
+  success: function(response){
+    console.log(response);
+  },
+  error: function(xhr, status, errors){
+    console.log(errors);
+  }
+});</code></pre>
+
+<blockquote>
+  <p>Example response:</p>
+</blockquote>
+<pre><code class="language-json">{
+  "item": {
+    "id": 101,
+    "user_id": 4,
+    "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit Nobis placeat consectetur adipisicing elit Nobis placeat.",
+    "post_id": 85
+  },
+  "status": 201,
+  "success": true
+}</code>
+</pre>
+
+<p>Edit comment of a post, you must set <code>Api-Token</code> header to edit comment.</p>
+<h3>HTTP Request</h3>
+<p><code>PUT https://api.sourov.im/posts/:post_id/comments/:comment_id</code></p>
+<h3>Required properties</h3>
+<p>content</p>
+<h3>Data Parameters</h3>
+<table>
+  <thead>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>content</td>
+    <td>string</td>
+    <td>Content of the comment.</td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>Delete comment</h2>
+<blockquote>
+  <p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -H "Api-Token: 2a686919c1dae796fc36d1173e402058" \
+-X DELETE "https://api.sourov.im/posts/85/comments/101"</code></pre>
+<pre><code class="language-javascript">jQuery.ajax({
+  url: "https://api.sourov.im/posts/85/comments/101",
+  method: "DELETE",
+  headers: {
+    "Api-Token": "2a686919c1dae796fc36d1173e402058"
+  },
+  success: function(response){
+    console.log(response);
+  },
+  error: function(xhr, status, errors){
+    console.log(errors);
+  }
+});</code></pre>
+
+<blockquote>
+  <p>Example response:</p>
+</blockquote>
+<pre><code class="language-json">{
+  "data": "The comment with id 86 has been deleted.",
+  "status": 200,
+  "success": true
+}</code>
+</pre>
+
+<p>Delete a post comment, On success it will return an object with success message.</p>
+<h3>HTTP Request</h3>
+<p><code>DELETE https://api.sourov.im/posts/:post_id/comments/:comment_id</code></p>
+
+<h3>Success object attributes</h3>
+<table>
+  <thead>
+  <tr>
+    <th>Attribute</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>data</td>
+    <td>string</td>
+    <td>Success message with id.</td>
+  </tr>
+  <tr>
+    <td>status</td>
+    <td>number</td>
+    <td>HTTP status code.</td>
+  </tr>
+  <tr>
+    <td>success</td>
+    <td>boolean</td>
+    <td>If request completed successfully then it will return true otherwise false.</td>
+  </tr>
+  </tbody>
+</table>

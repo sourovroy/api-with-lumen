@@ -94,7 +94,7 @@ class PostCommentController extends Controller
 
         $comment->delete();
 
-        return $this->success("The comment with with id {$comment_id} has been deleted.");
+        return $this->success("The comment with id {$comment_id} has been deleted.");
     } // destroy
 
     /**
