@@ -21,7 +21,7 @@ $factory->define(App\Post::class, function (Faker\Generator $faker) {
         'title' => $faker->sentence(4),
         'content' => $faker->paragraph(4),
         'user_id' => mt_rand(1, 2),
-        'image_url' => 'http://api.sourov.im/images/'.$filename,
+        'image_url' => 'https://api.sourov.im/images/'.$filename,
     ];
 });
 
